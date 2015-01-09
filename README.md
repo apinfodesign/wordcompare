@@ -1,0 +1,2 @@
+# wordcompare
+exercise
