@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+//compare two files
+console.log("testing");
+console.log(process.argv);
+
+var program = require('commander');
+var fs = require('fs');
+/**
+ * Module dependencies.
+ */
+
+fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents) {
+  console.log(contents);
+});
+
+fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents) {
+  console.log(contents);
+});
+
+
+
+
+/////////////////
+
+//console.log("Choose: (-r, -s, -h, -c)");
+
+
+// program
+//   .version('0.0.1')
+//   .option('-r, --rain', 'It is raining')
+//   .option('-s, --snow', 'It is snowing')
+//   .option('-h, --hot', 'It is hot')
+//   .option('-c, --cold', 'It is cold')
+//    .parse(process.argv);
+
+// console.log('The weather in Portland is: ');
+
+// if (program.rain) console.log('  - rain');
+// if (program.snow) console.log('  - snow');
+// if (program.hot) console.log('  - hot');
+// if (program.cold) console.log('  - cold');
+
+
