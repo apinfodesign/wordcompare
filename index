@@ -8,14 +8,45 @@ var fs = require('fs');
 /**
  * Module dependencies.
  */
+var inputText;
 
-fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents) {
-  console.log(contents);
+function counter(inputString){ 
+	var wordArray = inputString.split(/\s+/);
+	console.log("Here is your array:  " + wordArray);
+	console.log("The array is this long: " + wordArray.length);
+	};
+
+fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
+  inputText = contents1;
+ // console.log(contents1);
+  counter(inputText);
+  console.log("The text contains this many characters " + inputText.length);
 });
 
-fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents) {
-  console.log(contents);
+fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents2) {
+  inputText=contents2;
+  counter(inputText);
+  //console.log(contents2);
+  console.log("The text contains this many characters " + inputText.length);
 });
+
+
+// function compareTwoTextFiles(firstText, secondText){
+//  for each 
+
+//   function compareTwoTextFiles(contents1, contents2){
+//     for (i=0; i< NUMBER OF WORDS IN CONTENTS1; i++)
+//   READ THE i ELEMENT
+//      for (j=0; j < NUMBER OF WORDS IN CONTENTS2;  j++)
+// 			READ THE j ELEMENT
+//				COMPARE THE ith ELEMENT to the ELEMENT WORD
+//				IF MATCH, PUSH TO ListOfMatches[]
+//				
+//			}
+//		}
+//	RETURN ListOfMatches[]
+//
+//};
 
 
 
