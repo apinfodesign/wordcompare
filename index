@@ -14,23 +14,41 @@ function counter(inputString){
 	var wordArray = inputString.split(/\s+/);
 	console.log("Here is your array:  " + wordArray);
 	console.log("The array is this long: " + wordArray.length);
+	console.log("The text contains this many characters: " + inputText.length);
+	return wordArray;
 	};
+
+function compareTwoTextFiles(firstTextArray, secondTextArray){
+	firstTextArray.forEach(function(element){
+		//console.log("outer " + element);
+		currentElement = element;
+		secondTextArray.forEach(function(element){
+			//console.log("inner  " + element);
+			if (currentElement === element){console.log("We have a match on ... "+ currentElement)};	
+		})
+	})
+};
+
 
 fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
   inputText = contents1;
- // console.log(contents1);
-  counter(inputText);
-  console.log("The text contains this many characters " + inputText.length);
+   //counter(inputText);
+   var words1 = counter(inputText);     //first call of counter()
+  		//next second read inside of first read.
+		fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents2) {
+  			inputText=contents2;
+  			var words2 = counter(inputText);      // second call of counter
+  			 ///////////////////////////////////////////	
+ 			compareTwoTextFiles(words1, words2);
+ 	});
 });
 
-fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents2) {
-  inputText=contents2;
-  counter(inputText);
-  //console.log(contents2);
-  console.log("The text contains this many characters " + inputText.length);
-});
+// elements.forEach(function(element) {
+//   // The asynchronous action simulator
+//   setTimeout(function() {    console.log(element);  }, 100);
+// });
 
-
+ 
 // function compareTwoTextFiles(firstText, secondText){
 //  for each 
 
