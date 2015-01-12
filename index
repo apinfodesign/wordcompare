@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //compare two files
 console.log("Compare two files for common words.");
-//console.log(process.argv);
+console.log(process.argv);
 
 var program = require('commander');
 var fs = require('fs');
@@ -39,9 +39,9 @@ function uniqueWordGather(arr){
 			individualCount=0;  //reset individualCount to 0 to begin counting next word frequency
 			}
 	}
-	//console.log("uniqueCollector is ......... " + uniqueCollector  );
-	//console.log("uniqueCountCollector is ......... " + uniqueCountCollector  );
-	console.log("Words in Common: " + uniqueCollector.length);   // final stopping place.
+	console.log("     uniqueCollector is ... " + uniqueCollector  );
+	console.log("uniqueCountCollector is ... " + uniqueCountCollector  );
+	console.log("        Words in Common ... " + uniqueCollector.length);   // final stopping place.
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ function compareTwoTextFiles(firstTextArray, secondTextArray){
 	//console.log("Total Matches are: " + totalMatches);
 	//console.log("wordCollector is >>>> " + wordCollector);
 	///YES
-	uniqueWordGather(wordCollector);   //second function all
+	uniqueWordGather(wordCollector);   //second function call
 };
 
 ////////////////////////////////////////////////////////////////////////////
@@ -99,23 +99,21 @@ fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
 ////////////////  EXTRA MATERIAL
 ////////////////////////////////////////////////////////////////////////////
 
-//console.log("Choose: (-r, -s, -h, -c)");
+console.log("Choose: (-r, -s, -h, -c)");
 
 
-// program
-//   .version('0.0.1')
-//   .option('-r, --rain', 'It is raining')
-//   .option('-s, --snow', 'It is snowing')
-//   .option('-h, --hot', 'It is hot')
-//   .option('-c, --cold', 'It is cold')
-//    .parse(process.argv);
+program
+  .version('0.0.1')
+  .option('-c, --compare', 'compare word count')
+  .option('-s, --snow', 'It is snowing')
+  .parse(process.argv);
 
-// console.log('The weather in Portland is: ');
+console.log('Compare two files for number of common words: ');
 
-// if (program.rain) console.log('  - rain');
-// if (program.snow) console.log('  - snow');
-// if (program.hot) console.log('  - hot');
-// if (program.cold) console.log('  - cold');
+if (program.compare) console.log('  - compare');
+if (program.snow) console.log('  - snow');
+if (program.hot) console.log('  - hot');
+ 
 
 
 ////////EXTRA MATERIAL, NOT USED
