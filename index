@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 //compare two files
-console.log("testing");
-console.log(process.argv);
+console.log("Compare two files for common words.");
+//console.log(process.argv);
 
 var program = require('commander');
 var fs = require('fs');
@@ -12,32 +12,39 @@ var totalMatches = 0;
  * Module dependencies.
  */
 
+
+////////////////////////////////////////////////////////////////////////////
+////////////////  Functions
+////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
 //third function call after main, from another function
+// creates an array of unique words that appear in both texts.
+
 function uniqueWordGather(arr){
-	var uniqueCollector = [];
-	var uniqueCountCollector = [];
-	var individualCount=1;
-	arr.sort()  // we must sort the array for this unique finder   method to work
+	var uniqueCollector = [];       //an array for the unique word examples
+	var uniqueCountCollector = [];   //a count of the number of words at each position
+	var individualCount=1;           //a counter for determining uniqueCountCollector values
+	arr.sort()  			// sort the array alphabetically for this uniqueWordGather  method to work
 	
 	for (i=0; i<arr.length; i++){
 		//console.log(i);
- 
-		if (arr[i] === arr[i+1]){ individualCount= individualCount+1; }  //do nothing and keep going
+ 		if (arr[i] === arr[i+1]){ individualCount= individualCount+1; }  //do nothing and keep going
 		
 		else if (arr[i] !== arr[i+1])    // end of identical words so push to stack
 			{
- 			uniqueCollector.push( arr[i]  ); 
+ 			uniqueCollector.push( arr[i]  );   
 	 		uniqueCountCollector.push(individualCount+1)
 			individualCount=0;  //reset individualCount to 0 to begin counting next word frequency
 			}
 	}
 	//console.log("uniqueCollector is ......... " + uniqueCollector  );
 	//console.log("uniqueCountCollector is ......... " + uniqueCountCollector  );
-	console.log("Words in Common ....." + uniqueCollector.length);
+	console.log("Words in Common: " + uniqueCollector.length);   // final stopping place.
 };
 
-
-
+////////////////////////////////////////////////////////////////////////////
 ///  second function call from main 
 function compareTwoTextFiles(firstTextArray, secondTextArray){
 	var wordCollector=[];
@@ -60,11 +67,11 @@ function compareTwoTextFiles(firstTextArray, secondTextArray){
 	uniqueWordGather(wordCollector);   //second function all
 };
 
-
+////////////////////////////////////////////////////////////////////////////
 // first function call from main
 // parse the input string into an array  
-function counter(inputString){ 
-	var wordArray = inputString.split(/\s+/);
+function counter(string){ 
+	var wordArray = string.split(/\s+/);
 	//console.log("Here is your array:  " + wordArray);
 	//console.log("The array is this long: " + wordArray.length);
 	//console.log("The text contains this many characters: " + inputText.length);
@@ -72,7 +79,7 @@ function counter(inputString){
 	};
 
 
- ////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
 ////////////////  Main function
 ////////////////////////////////////////////////////////////////////////////
 
@@ -88,7 +95,9 @@ fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
  	});
 });
 
-/////////////////
+////////////////////////////////////////////////////////////////////////////
+////////////////  EXTRA MATERIAL
+////////////////////////////////////////////////////////////////////////////
 
 //console.log("Choose: (-r, -s, -h, -c)");
 
