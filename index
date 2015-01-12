@@ -5,69 +5,88 @@ console.log(process.argv);
 
 var program = require('commander');
 var fs = require('fs');
+var inputText;
+var totalMatches = 0;
+
 /**
  * Module dependencies.
  */
-var inputText;
 
-function counter(inputString){ 
-	var wordArray = inputString.split(/\s+/);
-	console.log("Here is your array:  " + wordArray);
-	console.log("The array is this long: " + wordArray.length);
-	console.log("The text contains this many characters: " + inputText.length);
-	return wordArray;
-	};
-
-function compareTwoTextFiles(firstTextArray, secondTextArray){
-	firstTextArray.forEach(function(element){
-		//console.log("outer " + element);
-		currentElement = element;
-		secondTextArray.forEach(function(element){
-			//console.log("inner  " + element);
-			if (currentElement === element){console.log("We have a match on ... "+ currentElement)};	
-		})
-	})
+//third function call after main, from another function
+function uniqueWordGather(arr){
+	var uniqueCollector = [];
+	var uniqueCountCollector = [];
+	var individualCount=1;
+	arr.sort()  // we must sort the array for this unique finder   method to work
+	
+	for (i=0; i<arr.length; i++){
+		//console.log(i);
+ 
+		if (arr[i] === arr[i+1]){ individualCount= individualCount+1; }  //do nothing and keep going
+		
+		else if (arr[i] !== arr[i+1])    // end of identical words so push to stack
+			{
+ 			uniqueCollector.push( arr[i]  ); 
+	 		uniqueCountCollector.push(individualCount+1)
+			individualCount=0;  //reset individualCount to 0 to begin counting next word frequency
+			}
+	}
+	//console.log("uniqueCollector is ......... " + uniqueCollector  );
+	//console.log("uniqueCountCollector is ......... " + uniqueCountCollector  );
+	console.log("Words in Common ....." + uniqueCollector.length);
 };
 
 
+
+///  second function call from main 
+function compareTwoTextFiles(firstTextArray, secondTextArray){
+	var wordCollector=[];
+	var uniqueWordCollector=[];
+	firstTextArray.forEach(function(element){
+		//console.log("outer " + element);
+		currentElement = element;  // store the currentElement for comparison using same function
+		secondTextArray.forEach(function(element){
+			//console.log("inner  " + element);
+			if (currentElement === element){	//YES WE FOUND A MATCH
+				totalMatches = totalMatches +1;  // INCREMENT THE COUNT
+				//console.log(totalMatches + ") Match >>> Text 1: | " + currentElement + " | to Text 2  | "+ element +" |" );
+				wordCollector.push(currentElement);
+			};
+		})
+	})
+	//console.log("Total Matches are: " + totalMatches);
+	//console.log("wordCollector is >>>> " + wordCollector);
+	///YES
+	uniqueWordGather(wordCollector);   //second function all
+};
+
+
+// first function call from main
+// parse the input string into an array  
+function counter(inputString){ 
+	var wordArray = inputString.split(/\s+/);
+	//console.log("Here is your array:  " + wordArray);
+	//console.log("The array is this long: " + wordArray.length);
+	//console.log("The text contains this many characters: " + inputText.length);
+	return wordArray;
+	};
+
+
+ ////////////////////////////////////////////////////////////////////////////
+////////////////  Main function
+////////////////////////////////////////////////////////////////////////////
+
 fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
-  inputText = contents1;
-   //counter(inputText);
-   var words1 = counter(inputText);     //first call of counter()
+   inputText = contents1;    
+   //first call of counter()  
+   var words1 = counter(inputText);     
   		//next second read inside of first read.
 		fs.readFile('./wordfile2', { encoding: 'utf8' }, function(err, contents2) {
   			inputText=contents2;
-  			var words2 = counter(inputText);      // second call of counter
-  			 ///////////////////////////////////////////	
- 			compareTwoTextFiles(words1, words2);
+  			var words2 = counter(inputText);      // second call of counter	
+ 			compareTwoTextFiles(words1, words2);	//only function all in main loop		
  	});
 });
-
-// elements.forEach(function(element) {
-//   // The asynchronous action simulator
-//   setTimeout(function() {    console.log(element);  }, 100);
-// });
-
- 
-// function compareTwoTextFiles(firstText, secondText){
-//  for each 
-
-//   function compareTwoTextFiles(contents1, contents2){
-//     for (i=0; i< NUMBER OF WORDS IN CONTENTS1; i++)
-//   READ THE i ELEMENT
-//      for (j=0; j < NUMBER OF WORDS IN CONTENTS2;  j++)
-// 			READ THE j ELEMENT
-//				COMPARE THE ith ELEMENT to the ELEMENT WORD
-//				IF MATCH, PUSH TO ListOfMatches[]
-//				
-//			}
-//		}
-//	RETURN ListOfMatches[]
-//
-//};
-
-
-
 
 /////////////////
 
@@ -90,3 +109,32 @@ fs.readFile('./wordfile1', { encoding: 'utf8' }, function(err, contents1) {
 // if (program.cold) console.log('  - cold');
 
 
+////////EXTRA MATERIAL, NOT USED
+
+// reduce array of all words to array of unique words 
+// function uniqueWordsOnly(inputArray){
+// 	//forEach element of input array
+// 	var uniqueWordCollection = [];
+// 	var notUniqueCount=0;
+// 	var uniqueCount=0;
+
+// 	inputArray.forEach(function(element){
+// 		var testValue = element;
+// 		//	console.log("testValue is @@@@@@@@@@@@@" + testValue);
+// 		inputArray.forEach(function(element){
+// 			//console.log("zip zap");
+// 			if (testValue !== element){ 
+// 										uniqueCount = uniqueCount + 1;
+// 									  }
+// 			else if (testValue === element) { 
+// 										notUniqueCount = notUniqueCount + 1;
+// 										//console.log("Not Unique is "+ notUniqueCount);
+// 										uniqueWordCollection.push(testValue);
+// 					//console.log("found a repeated word " + testValue);
+// 					};
+// 		})
+// 	})
+// 	/// display the array of unique words and its length
+//  	//console.log("uniqueWordCollection is " +uniqueWordCollection + " with length " +uniqueWordCollection.length)
+// 	return uniqueWordCollection;
+// };
